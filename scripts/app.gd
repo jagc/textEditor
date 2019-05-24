@@ -5,16 +5,25 @@ func _ready():
 	$MenuButtonFile.get_popup().add_item("Save as File")
 	$MenuButtonFile.get_popup().add_item("Quit")
 	
-	$MenuButtonFile.get_popup().connect("id_pressed", self, "_on_item_pressed")
+	$MenuButtonFile.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonFile"])
 	
-func _on_item_pressed(arg):
-	match arg:
-		0:
+	$MenuButtonHelp.get_popup().add_item("About")
+	$MenuButtonHelp.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonHelp"])
+	
+func _on_item_pressed(id, menuName):
+	# can be another way of doing this. Beside getting id.
+	# this is our implementation, for now.
+	var menu = $MenuButtonFile if menuName == 'MenuButtonFile' else $MenuButtonHelp
+	var item_name = menu.get_popup().get_item_text(id)
+	match item_name:
+		"Open File":
 			_on_openFile_pressed()
-		1:
+		"Save as File":
 			_on_saveFile_pressed()
-		2:
+		"Quit":
 			_quit_app()
+		'About':
+			$aboutDialog.popup()
 
 func _process(_delta):
 	if Input.is_action_just_pressed("saveFile"):

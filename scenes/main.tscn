@@ -6,25 +6,14 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
 
 [node name="TextEdit" type="TextEdit" parent="."]
 margin_top = 40.0
-margin_right = 600.0
-margin_bottom = 565.0
-
-[node name="openFile" type="Button" parent="."]
-margin_left = 633.0
-margin_top = 9.0
-margin_right = 742.0
-margin_bottom = 76.0
-text = "Open File"
-
-[node name="saveFile" type="Button" parent="."]
-margin_left = 633.0
-margin_top = 101.15
-margin_right = 742.0
-margin_bottom = 168.15
-text = "Save as File"
+margin_right = 1024.0
+margin_bottom = 600.0
 
 [node name="FileDialog" type="FileDialog" parent="."]
 margin_left = 135.0
@@ -50,7 +39,37 @@ current_path = "R:/Projects/GoDot/textEditor/"
 margin_right = 115.0
 margin_bottom = 40.0
 text = "File"
-[connection signal="pressed" from="openFile" to="." method="_on_openFile_pressed"]
-[connection signal="pressed" from="saveFile" to="." method="_on_saveFile_pressed"]
+switch_on_hover = true
+
+[node name="MenuButtonHelp" type="MenuButton" parent="."]
+margin_left = 116.423
+margin_right = 231.423
+margin_bottom = 40.0
+text = "Help"
+switch_on_hover = true
+
+[node name="aboutDialog" type="WindowDialog" parent="."]
+margin_left = 241.145
+margin_top = 193.009
+margin_right = 776.145
+margin_bottom = 410.009
+
+[node name="NinePatchRect" type="NinePatchRect" parent="aboutDialog"]
+margin_right = 535.0
+margin_bottom = 217.0
+
+[node name="Label" type="Label" parent="aboutDialog/NinePatchRect"]
+margin_left = 66.0
+margin_top = 32.0
+margin_right = 453.0
+margin_bottom = 51.0
+text = "This is the about text. Super lame. Samuel  ipsum mode: on."
+
+[node name="RichTextLabel" type="RichTextLabel" parent="aboutDialog/NinePatchRect"]
+margin_left = 68.0
+margin_top = 54.0
+margin_right = 452.0
+margin_bottom = 191.0
+text = "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee."
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="file_selected" from="saveFileDialogue" to="." method="_on_saveFileDialogue_file_selected"]
