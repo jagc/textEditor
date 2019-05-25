@@ -1,6 +1,11 @@
 extends Control
 
+var appName = "Text Editor Tutorial stuff"
+var currentFile = "Untitled"
+
 func _ready():
+	updateWindowTitle()
+	$MenuButtonFile.get_popup().add_item("New File")
 	$MenuButtonFile.get_popup().add_item("Open File")
 	$MenuButtonFile.get_popup().add_item("Save as File")
 	$MenuButtonFile.get_popup().add_item("Quit")
@@ -10,6 +15,14 @@ func _ready():
 	$MenuButtonHelp.get_popup().add_item("About")
 	$MenuButtonHelp.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonHelp"])
 	
+func updateWindowTitle():
+	OS.set_window_title(appName + ' - ' + currentFile)
+	
+func newFile():
+	currentFile = "Untitled"
+	updateWindowTitle()
+	$TextEdit.text = ''
+
 func _on_item_pressed(id, menuName):
 	# can be another way of doing this. Beside getting id.
 	# this is our implementation, for now.
@@ -18,6 +31,8 @@ func _on_item_pressed(id, menuName):
 	match item_name:
 		"Open File":
 			_on_openFile_pressed()
+		"New File":
+			newFile()
 		"Save as File":
 			_on_saveFile_pressed()
 		"Quit":
@@ -41,17 +56,20 @@ func _on_saveFile_pressed():
 
 
 func _on_FileDialog_file_selected(path):
-	print(path)
 	var f = File.new()
 	f.open(path, 1)
 	$TextEdit.text = f.get_as_text()
 	f.close()
+	currentFile = path
+	updateWindowTitle()
 
 func _on_saveFileDialogue_file_selected(path):
 	var f = File.new()
 	f.open(path, 2)
 	f.store_string($TextEdit.text)
 	f.close()
+	currentFile = path
+	updateWindowTitle()
 
 func _quit_app():
 	get_tree().quit()
