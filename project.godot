@@ -19,6 +19,10 @@ config/name="textEditor - Loading..."
 run/main_scene="res://scenes/main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/stretch/aspect="keep"
+
 [input]
 
 saveFile={
