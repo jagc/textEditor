@@ -1,7 +1,9 @@
 extends Control
 
+const  UNTITLED = "Untitled"
+
 var appName = "Text Editor Tutorial"
-var currentFile = "Untitled"
+var currentFile = UNTITLED
 var menuDict = {
 	'MenuButtonFile' : ["New File", "Open File", "Save", "Save as File", "Quit"],
 	'MenuButtonHelp' : ["Godot Website", "About"]
@@ -50,7 +52,7 @@ func _updateWindowTitle():
 	OS.set_window_title(appName + ' - ' + currentFile)
 	
 func _newFile():
-	currentFile = "Untitled"
+	currentFile = UNTITLED
 	_updateWindowTitle()
 	$TextEdit.text = ''
 
@@ -89,31 +91,30 @@ func _on_saveFile_pressed():
 	$saveFileDialogue.popup()
 
 func _on_FileDialog_file_selected(path):
-	var f = File.new()
-	f.open(path, 1)
-	$TextEdit.text = f.get_as_text()
-	f.close()
+	_handleFile(path, 1)
 	currentFile = path
 	_updateWindowTitle()
 
 func _on_saveFileDialogue_file_selected(path):
-	var f = File.new()
-	f.open(path, 2)
-	f.store_string($TextEdit.text)
-	f.close()
+	_handleFile(path, 2)
 	currentFile = path
 	_updateWindowTitle()
 
-func _quit_app():
-	get_tree().quit()
-	
 func _saveFile():
 	var path = currentFile
-	if path == 'Untitled':
+	if path == UNTITLED:
 		$saveFileDialogue.popup()
 	else:
-		var f = File.new()
-		f.open(path, 2)
+		_handleFile(path, 2)
+
+func _handleFile(path, mode):
+	var f = File.new()
+	f.open(path, mode)
+	if mode == 1:
+		$TextEdit.text = f.get_as_text()
+	elif mode == 2:
 		f.store_string($TextEdit.text)
-		f.close()
-		_updateWindowTitle()
+	f.close()
+
+func _quit_app():
+	get_tree().quit()
