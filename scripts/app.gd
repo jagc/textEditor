@@ -1,6 +1,6 @@
 extends Control
 
-var appName = "Text Editor Tutorial stuff"
+var appName = "Text Editor Tutorial"
 var currentFile = "Untitled"
 
 func _ready():
@@ -12,6 +12,7 @@ func _ready():
 	
 	$MenuButtonFile.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonFile"])
 	
+	$MenuButtonHelp.get_popup().add_item("Godot Website")
 	$MenuButtonHelp.get_popup().add_item("About")
 	$MenuButtonHelp.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonHelp"])
 	
@@ -39,6 +40,8 @@ func _on_item_pressed(id, menuName):
 			_quit_app()
 		'About':
 			$aboutDialog.popup()
+		'Godot Website':
+			OS.shell_open("https://godotengine.org")
 
 func _process(_delta):
 	if Input.is_action_just_pressed("saveFile"):
