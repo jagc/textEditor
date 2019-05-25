@@ -11,6 +11,15 @@ func _ready():
 	$MenuButtonFile.get_popup().add_item("Save as File")
 	$MenuButtonFile.get_popup().add_item("Quit")
 	
+	# alternative way of setting a shortcut key
+	var shortcut = ShortCut.new()
+	var inputEventKey = InputEventKey.new()
+	inputEventKey.set_scancode(KEY_Q) #if keyboard key 'Q' is pressed
+	inputEventKey.control = true #if keyboard key 'Control' is pressed
+	shortcut.set_shortcut(inputEventKey) #re-sets and confirms the variables/properties of the instance set above.
+	
+	$MenuButtonFile.get_popup().set_item_shortcut(4, shortcut, true) # 3rd parameter tells that this shortcut is global
+	
 	$MenuButtonFile.get_popup().connect("id_pressed", self, "_on_item_pressed", ["MenuButtonFile"])
 	
 	$MenuButtonHelp.get_popup().add_item("Godot Website")

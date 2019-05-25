@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scripts/app.gd" type="Script" id=1]
+
+[sub_resource type="Theme" id=1]
+"MenuButton/fonts/Menu type" = null
 
 [node name="Control" type="Control"]
 anchor_right = 1.0
@@ -43,6 +46,7 @@ current_path = "R:/Projects/GoDot/textEditor/"
 [node name="MenuButtonFile" type="MenuButton" parent="."]
 margin_right = 115.0
 margin_bottom = 40.0
+theme = SubResource( 1 )
 text = "File"
 switch_on_hover = true
 
