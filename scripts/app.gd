@@ -1,5 +1,5 @@
 extends Control
-
+# another awesome comment
 var appName = "Text Editor Tutorial"
 var currentFile = "Untitled"
 
@@ -7,6 +7,7 @@ func _ready():
 	updateWindowTitle()
 	$MenuButtonFile.get_popup().add_item("New File")
 	$MenuButtonFile.get_popup().add_item("Open File")
+	$MenuButtonFile.get_popup().add_item("Save")
 	$MenuButtonFile.get_popup().add_item("Save as File")
 	$MenuButtonFile.get_popup().add_item("Quit")
 	
@@ -34,6 +35,8 @@ func _on_item_pressed(id, menuName):
 			_on_openFile_pressed()
 		"New File":
 			newFile()
+		"Save":
+			saveFile()
 		"Save as File":
 			_on_saveFile_pressed()
 		"Quit":
@@ -41,7 +44,7 @@ func _on_item_pressed(id, menuName):
 		'About':
 			$aboutDialog.popup()
 		'Godot Website':
-			OS.shell_open("https://godotengine.org")
+			return OS.shell_open("https://godotengine.org")
 
 func _process(_delta):
 	if Input.is_action_just_pressed("saveFile"):
@@ -76,3 +79,14 @@ func _on_saveFileDialogue_file_selected(path):
 
 func _quit_app():
 	get_tree().quit()
+	
+func saveFile():
+	var path = currentFile
+	if path == 'Untitled':
+		$saveFileDialogue.popup()
+	else:
+		var f = File.new()
+		f.open(path, 2)
+		f.store_string($TextEdit.text)
+		f.close()
+		updateWindowTitle()
