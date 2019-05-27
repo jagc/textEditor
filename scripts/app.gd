@@ -64,21 +64,17 @@ func _on_item_pressed(id, menuName):
 	match item_name:
 		"Open File":
 			_on_openFile_pressed()
-			print(isModalOpen)
 		"New File":
 			_newFile()
 		"Save":
 			_saveFile()
-			print(isModalOpen)
 		"Save as File":
 			_on_saveFile_pressed()
-			print(isModalOpen)
 		"Quit":
 			_quit_app()
 		'About':
 			$aboutDialog.popup()
 			isModalOpen = true
-			print(isModalOpen)
 		'Godot Website':
 			return OS.shell_open("https://godotengine.org")
 
@@ -93,7 +89,6 @@ func _process(_delta):
 func _on_openFile_pressed():
 	$FileDialog.popup()
 	isModalOpen = true
-#	print(isModalOpen)
 
 func _on_saveFile_pressed():
 	$saveFileDialogue.popup()
@@ -129,7 +124,6 @@ func _handleFile(path, mode):
 func _quit_app():
 	if isModalOpen == false:
 		get_tree().quit()
-		print('modal is not open')
 #	elif isModalOpen == true:
 #		print(isModalOpen)
 
