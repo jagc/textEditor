@@ -11,6 +11,7 @@ var menuDict = {
 }
 
 func _ready():
+	# OS.set_borderless_window(1)
 	_set_menuScreen_objects()
 
 	_updateWindowTitle()

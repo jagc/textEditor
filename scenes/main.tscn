@@ -1,6 +1,16 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/app.gd" type="Script" id=1]
+[ext_resource path="res://scripts/MenuTitleBar.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.298039, 0.298039, 0.298039, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.368627, 0.368627, 0.368627, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.298039, 0.298039, 0.298039, 1 )
 
 [sub_resource type="Theme" id=1]
 "MenuButton/fonts/Menu type" = null
@@ -17,6 +27,31 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.368627, 0.368627, 0.368627, 1 )
+
+[node name="MenuTitleBar" type="Control" parent="."]
+anchor_right = 1.0
+margin_bottom = 39.0
+mouse_filter = 1
+script = ExtResource( 2 )
+
+[node name="closeButton" type="Button" parent="MenuTitleBar"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -40.0
+margin_bottom = 40.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/normal = SubResource( 3 )
+text = "X"
+
+[node name="minimizeButton" type="Button" parent="MenuTitleBar"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -80.0
+margin_right = -40.0
+margin_bottom = 40.0
+custom_styles/hover = SubResource( 4 )
+custom_styles/normal = SubResource( 3 )
+text = "_"
 
 [node name="TextEdit" type="TextEdit" parent="."]
 anchor_right = 1.0
@@ -58,6 +93,7 @@ text = "Help"
 switch_on_hover = true
 
 [node name="aboutDialog" type="WindowDialog" parent="."]
+editor/display_folded = true
 margin_left = 241.145
 margin_top = 193.009
 margin_right = 776.145
@@ -80,6 +116,9 @@ margin_top = 54.0
 margin_right = 452.0
 margin_bottom = 191.0
 text = "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother's keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee."
+[connection signal="gui_input" from="MenuTitleBar" to="MenuTitleBar" method="_on_MenuTitleBar_gui_input"]
+[connection signal="pressed" from="MenuTitleBar/closeButton" to="MenuTitleBar" method="_on_closeButton_pressed"]
+[connection signal="pressed" from="MenuTitleBar/minimizeButton" to="MenuTitleBar" method="_on_minimizeButton_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_FileDialog_file_selected"]
 [connection signal="popup_hide" from="FileDialog" to="." method="_on_FileDialog_popup_hide"]
 [connection signal="file_selected" from="saveFileDialogue" to="." method="_on_saveFileDialogue_file_selected"]
