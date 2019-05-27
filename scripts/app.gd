@@ -4,6 +4,7 @@ const  UNTITLED = "Untitled"
 
 var appName = "Text Editor Tutorial"
 var currentFile = UNTITLED
+var isModalOpen = false
 var menuDict = {
 	'MenuButtonFile' : ["New File", "Open File", "Save", "Save as File", "Quit"],
 	'MenuButtonHelp' : ["Godot Website", "About"]
@@ -63,16 +64,21 @@ func _on_item_pressed(id, menuName):
 	match item_name:
 		"Open File":
 			_on_openFile_pressed()
+			print(isModalOpen)
 		"New File":
 			_newFile()
 		"Save":
 			_saveFile()
+			print(isModalOpen)
 		"Save as File":
 			_on_saveFile_pressed()
+			print(isModalOpen)
 		"Quit":
 			_quit_app()
 		'About':
 			$aboutDialog.popup()
+			isModalOpen = true
+			print(isModalOpen)
 		'Godot Website':
 			return OS.shell_open("https://godotengine.org")
 
@@ -82,13 +88,16 @@ func _process(_delta):
 	elif Input.is_action_just_pressed("openFile"):
 		_on_openFile_pressed()
 	elif Input.is_action_just_pressed("quit"):
-		_quit_app()
+		call_deferred("_quit_app")
 		
 func _on_openFile_pressed():
 	$FileDialog.popup()
+	isModalOpen = true
+#	print(isModalOpen)
 
 func _on_saveFile_pressed():
 	$saveFileDialogue.popup()
+	isModalOpen = true
 
 func _on_FileDialog_file_selected(path):
 	_handleFile(path, 1)
@@ -104,6 +113,7 @@ func _saveFile():
 	var path = currentFile
 	if path == UNTITLED:
 		$saveFileDialogue.popup()
+		isModalOpen = true
 	else:
 		_handleFile(path, 2)
 
@@ -117,4 +127,17 @@ func _handleFile(path, mode):
 	f.close()
 
 func _quit_app():
-	get_tree().quit()
+	if isModalOpen == false:
+		get_tree().quit()
+		print('modal is not open')
+#	elif isModalOpen == true:
+#		print(isModalOpen)
+
+func _on_FileDialog_popup_hide():
+	isModalOpen = false
+
+func _on_saveFileDialogue_popup_hide():
+	isModalOpen = false
+
+func _on_aboutDialog_popup_hide():
+	isModalOpen = false
